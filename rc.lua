@@ -10,6 +10,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+-- my libraries
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -279,6 +281,9 @@ globalkeys = gears.table.join(
     
     awful.key({ modkey,           }, "space", function () kbdcfg.switch() end,
               {description = "change keyboard layout", group = "awesome"}),
+
+    awful.key({ modkey,           }, "l", function () awful.spawn("i3lock") end,
+              {description = "lock screen", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
