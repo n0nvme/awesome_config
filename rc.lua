@@ -11,6 +11,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- my libraries
+local battery_widget = require("widgets.battery")
+
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -119,14 +121,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mykeyboardlayout = awful.widget.keyboardlayout()
 kbdcfg = {}
 kbdcfg.cmd = "setxkbmap"
-kbdcfg.layout = { { "us", "" }, { "ru", "" } }
+kbdcfg.layout = { { "us", "", "🇺🇸" }, { "ru", "", "🇷🇺" } }
 kbdcfg.current = 1  -- us is our default layout
 kbdcfg.widget = wibox.widget.textbox()
-kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][1] .. " ")
+kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][3] .. " ")
 kbdcfg.switch = function ()
    kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
    local t = kbdcfg.layout[kbdcfg.current]
-   kbdcfg.widget:set_text( " " .. t[1] .. " ")
+   kbdcfg.widget:set_text( " " .. t[3] .. " ")
    os.execute( kbdcfg.cmd .. " " .. t[1] .. " " .. t[2] )
    naughty.notify({title = "Keyboard Layout", text = t[1], timeout = 2})
 end
@@ -137,6 +139,13 @@ kbdcfg.widget:buttons(awful.util.table.join(
 ))
 
 --}}}
+
+-- {{{ battery widget
+btr = {}
+btr.widget = wibox.widget.textbox()
+btr.widget:set_text(" " .. "battery ... " .. " ")
+-- }}}
+
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -236,6 +245,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            --btr.widget,
+            battery_widget,
             kbdcfg.widget,
             wibox.widget.systray(),
             mytextclock,
