@@ -56,8 +56,6 @@ end
 
 local function show_battery_warning()
     naughty.notify{
-        icon = HOME .. "/.config/awesome/nichosi.png",
-        icon_size=100,
         text = "Huston, we have a problem",
         title = "Battery is dying",
         timeout = 5, hover_timeout = 0.5,
