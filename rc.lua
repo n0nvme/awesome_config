@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init("~/.config/awesome/themes/" .. "n0nvme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -143,7 +143,8 @@ kbdcfg.widget:buttons(awful.util.table.join(
 -- {{{ battery widget
 btr = {}
 btr.widget = wibox.widget.textbox()
-btr.widget:set_text(" " .. "battery ... " .. " ")
+btr.widget:set_text(" " .. gears.filesystem.get_themes_dir() .. " ")
+
 -- }}}
 
 -- {{{ Wibar
@@ -245,7 +246,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            --btr.widget,
+            -- btr.widget,
             battery_widget,
             kbdcfg.widget,
             wibox.widget.systray(),
